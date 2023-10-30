@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=True
+      - DB_HOST=db
+      - DB_NAME=mydbname
+      - DB_USER=mydbuser
+      - DB_PASSWORD=mydbpassword
+
+  db:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=mydbname
+      - POSTGRES_USER=mydbuser
+      - POSTGRES_PASSWORD=mydbpassword
+
+volumes:
+  postgres_data:

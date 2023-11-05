@@ -80,29 +80,29 @@ all_buttons = [
     InlineKeyboardButton(text='Футболка 8', callback_data='t-shirt_8')
 ]
 
-def get_keyboard(page=0):
-    buttons_per_page = 4
-    start = page * buttons_per_page
-    end = start + buttons_per_page
-    current_buttons = all_buttons[start:end]
-
-    # Добавить кнопки переключения
-    navigation_buttons = []
-    if page > 0:
-        navigation_buttons.append(InlineKeyboardButton(text='⬅️ Назад', callback_data=f'page_{page-1}'))
-    if end < len(all_buttons):
-        navigation_buttons.append(InlineKeyboardButton(text='Вперед ➡️', callback_data=f'page_{page+1}'))
-
-    # Создать клавиатуру
-    keyboard = InlineKeyboardMarkup(row_width=2)
-    keyboard.inline_keyboard = [current_buttons, navigation_buttons]
-
-    return keyboard
-
-@bot.callback_query_handler(func=lambda call: call.data.startswith('page_'))
-def query_handler(call):
-    page = int(call.data.split('_')[1])
-    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите футболку:", reply_markup=get_keyboard(page))
+# def get_keyboard(page=0):
+#     buttons_per_page = 4
+#     start = page * buttons_per_page
+#     end = start + buttons_per_page
+#     current_buttons = all_buttons[start:end]
+# 
+#     # Добавить кнопки переключения
+#     navigation_buttons = []
+#     if page > 0:
+#         navigation_buttons.append(InlineKeyboardButton(text='⬅️ Назад', callback_data=f'page_{page-1}'))
+#     if end < len(all_buttons):
+#         navigation_buttons.append(InlineKeyboardButton(text='Вперед ➡️', callback_data=f'page_{page+1}'))
+# 
+#     # Создать клавиатуру
+#     keyboard = InlineKeyboardMarkup(row_width=2)
+#     keyboard.inline_keyboard = [current_buttons, navigation_buttons]
+# 
+#     return keyboard
+# 
+# @bot.callback_query_handler(func=lambda call: call.data.startswith('page_'))
+# def query_handler(call):
+#     page = int(call.data.split('_')[1])
+#     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите футболку:", reply_markup=get_keyboard(page))
 
 # all_buttons = [
 #     InlineKeyboardButton(text='Кнопка 1', callback_data='button1'),

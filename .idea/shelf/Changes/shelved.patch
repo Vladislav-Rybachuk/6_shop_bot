@@ -1,0 +1,417 @@
+Index: core/handlers/basic.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from aiogram import Bot\r\nfrom aiogram.types import Message\r\nimport json\r\nfrom core.keyboards.inline import first_select\r\n\r\n\r\nasync def get_start(message: Message, bot:Bot):\r\n    await bot.send_message(message.from_user.id, f'<b>Привет, {message.from_user.first_name}!</b>')\r\n    await bot.send_photo(message.from_user.id,\r\n                         photo='https://ecdn.teacherspayteachers.com/thumbitem/Welcome-to-my-store--4519208-1555593381/original-4519208-1.jpg',\r\n                         caption='Добро пожаловать в наш магазин!',\r\n                         reply_markup=first_select)\r\n    chat_id = message.chat.id\r\n    channel_username = 'chanel_username'# После указания канала нужно внести имя канала(без @)\r\n    group_chat_id = 'group_chat_id'# Аналогично с группой group_chat_id\r\n    try:\r\n        result = await bot.get_chat_member(chat_id, channel_username)\r\n        if result.status == \"member\" or result.status == \"administrator\" or result.status == \"creator\":\r\n        # Пользователь подписан на канал\r\n            await message.answer(\"Вы подписаны на наш канал!\")\r\n        else:\r\n            # Пользователь не подписан на канал\r\n            await message.answer(\"Подпишитесь на наш канал, чтобы продолжить!\")\r\n\r\n    except Exception as e:\r\n        # Ошибка, возможно, канал не найден\r\n        await message.answer(\"Произошла ошибка при проверке подписки на канал.\")\r\n\r\n    # Проверка вступления в группу\r\n    try:\r\n        result = await bot.get_chat_member(chat_id, group_chat_id)\r\n        if result.status == \"member\" or result.status == \"administrator\" or result.status == \"creator\":\r\n            # Пользователь является участником группы\r\n            await message.answer(\"Вы участник нашей группы!\")\r\n        else:\r\n            # Пользователь не является участником группы\r\n            await message.answer(\"Присоединитесь к нашей группе, чтобы продолжить!\")\r\n    except Exception as e:\r\n    # Ошибка, возможно, группа не найдена\r\n        await message.answer(\"Произошла ошибка при проверке участия в группе.\")\r\n\r\nasync def get_photo(message: Message, bot: Bot):\r\n    await message.answer(f'Отлично. Ты отправил картинку, я сохраню.')\r\n    file = await bot.get_file((message.photo[-1].file_id))\r\n    await bot. download_file(file.file_path,'photo.jpg')\r\n\r\n\r\nasync def get_hello(message: Message, bot: Bot):\r\n    await message.answer(f'И тебе привет!')\r\n    json_str = json.dumps(message.dict(), default=str)\r\n    print(json_str)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/handlers/basic.py b/core/handlers/basic.py
+--- a/core/handlers/basic.py	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/core/handlers/basic.py	(date 1699135218339)
+@@ -40,12 +40,14 @@
+         await message.answer("Произошла ошибка при проверке участия в группе.")
+ 
+ async def get_photo(message: Message, bot: Bot):
++    print('6')
+     await message.answer(f'Отлично. Ты отправил картинку, я сохраню.')
+     file = await bot.get_file((message.photo[-1].file_id))
+     await bot. download_file(file.file_path,'photo.jpg')
+ 
+ 
+ async def get_hello(message: Message, bot: Bot):
++    print('4')
+     await message.answer(f'И тебе привет!')
+     json_str = json.dumps(message.dict(), default=str)
+     print(json_str)
+\ No newline at end of file
+Index: core/settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from environs import Env\r\nfrom dataclasses import dataclass\r\n\r\n\r\n@dataclass\r\nclass Bots:\r\n    bot_token: str\r\n    admin_id: int\r\n\r\n@dataclass\r\nclass Settings:\r\n    bots: Bots\r\n\r\ndef get_settings(path: str):\r\n    env = Env()\r\n    env.read_env(path)\r\n\r\n    return Settings(\r\n        bots=Bots(\r\n            bot_token=env.str(\"TOKEN\"),\r\n            admin_id=env.int(\"ADMIN_ID\")\r\n        )\r\n    )\r\n\r\nsettings = get_settings('input')\r\nprint(settings)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/settings.py b/core/settings.py
+--- a/core/settings.py	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/core/settings.py	(date 1699017291177)
+@@ -22,5 +22,5 @@
+         )
+     )
+ 
+-settings = get_settings('input')
++settings = get_settings('.env')
+ print(settings)
+\ No newline at end of file
+Index: core/handlers/pay.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from aiogram import Bot\r\nfrom aiogram.types import Message, LabeledPrice\r\n\r\nasync def order(message: Message, bot:Bot):\r\n    await bot.send_invoice(\r\n        chat_id=message.chat.id,\r\n        title='Покупка через Telegram бот',\r\n        description='1',\r\n        provider_token='',\r\n        currency='rub',\r\n        prices=[\r\n            LabeledPrice(\r\n                'цена,скидка,ндс,бону'\r\n\r\n            )\r\n        ],\r\n        max_tip_amount=,\r\n        suggested_tip_\r\n    )
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/handlers/pay.py b/core/handlers/pay.py
+--- a/core/handlers/pay.py	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/core/handlers/pay.py	(date 1699135218344)
+@@ -1,19 +1,67 @@
+ from aiogram import Bot
+-from aiogram.types import Message, LabeledPrice
++from aiogram.types import Message, LabeledPrice, PreCheckoutQuery
+ 
+ async def order(message: Message, bot:Bot):
+     await bot.send_invoice(
+         chat_id=message.chat.id,
+-        title='Покупка через Telegram бот',
+-        description='1',
+-        provider_token='',
++        title='Покупка товара через Telegram бот',
++        description='Лучший товар в лучшем магазине',
++        payload='Payment through a bot',
++        provider_token='381764678:TEST:69949',
+         currency='rub',
+         prices=[
+             LabeledPrice(
+-                'цена,скидка,ндс,бону'
++                label='Оплата подписки',
++                amount=99000,
++            ),
++            LabeledPrice(
++                label='НДС',
++                amount=20000,
++            ),
++            LabeledPrice(
++                label='Cкидка',
++                amount=-10000,
++            ),
++            LabeledPrice(
++                label='Бонус',
++                amount=-40000,
++            ),
++        ],
++        max_tip_amount=5000,
++        suggested_tip_amounts=[1000, 1200, 1400, 2000],
++        start_parameter='dsfdf',
++        photo_url='https://smartfin.ua/uploads/blog_posts/9/249/image/c209b605463208fd232ccf9b09630825_detail.jpg',
++        photo_size=100,
++        photo_width=800,
++        photo_height=500,
++        need_name=True,
++        need_phone_number=True,
++        need_email=True,
++        need_shipping_address=False,
++        send_phone_number_to_provider=False,
++        send_email_to_provider=False,
++        is_flexible=False,
++        disable_notification=False,
++        protect_content=False,
++        reply_to_message_id=None,
++        allow_sending_without_reply=True,
++        reply_markup=None,
++        request_timeout=15
++    )
++
+ 
+-            )
+-        ],
+-        max_tip_amount=,
+-        suggested_tip_
+-    )
+\ No newline at end of file
++async def pre_checkout_query(pre_checkout_query: PreCheckoutQuery, bot: Bot):
++    print('1')
++    await bot.answer_pre_checkout_query(
++        pre_checkout_query_id=pre_checkout_query.id,
++        ok=True
++    )
++
++
++async def successful_payment(message: Message):
++    print('2')
++    msg = f'Cпасибо за оплату {message.successful_payment.total_amount // 100}{message.successful_payment.currency}.'\
++          f'\r\n наш менеджер получил заказ.'
++    await message.answer(msg)
++
++
+Index: requirements.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>aiogram==3.0.0b4\r\npython-dotenv==1.0.0\r\ndjango==3.0\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/requirements.txt b/requirements.txt
+--- a/requirements.txt	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/requirements.txt	(date 1699130823365)
+@@ -1,3 +1,4 @@
+ aiogram==3.0.0b4
+ python-dotenv==1.0.0
++environs==9.0
+ django==3.0
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from aiogram import Bot, Dispatcher\r\nfrom aiogram.types import Message, ContentType\r\nfrom core.handlers.basic import get_start, get_photo, get_hello\r\nimport asyncio\r\nimport logging\r\nfrom core.settings import settings\r\nfrom aiogram.filters import ContentTypesFilter,Command, CommandStart\r\nfrom aiogram import F\r\nfrom core.utils.commands import set_commands\r\nfrom core.handlers.callback import select_basket, select_catalog, select_faq, select_category_1, select_product_1\r\n\r\n\r\nasync def start_bot(bot: Bot):\r\n    await set_commands(bot)\r\n    await bot.send_message(settings.bots.admin_id, text='Бот запущен!')\r\n\r\n\r\nasync def stop_bot(bot: Bot):\r\n    await bot.send_message(settings.bots.admin_id, text='Бот остановлен!')\r\n\r\n\r\n\r\nasync def start():\r\n    logging.basicConfig(level=logging.INFO,\r\n                        format=\"%(asctime)s - [%(levelname)s] - %(name)s - \"\r\n                                \"(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s\"\r\n                        )\r\n    bot = Bot(token=settings.bots.bot_token, parse_mode='HTML')\r\n\r\n    dp = Dispatcher()\r\n    dp.startup.register(start_bot)\r\n    dp.shutdown.register(stop_bot)\r\n    dp.callback_query.register(select_basket, F.data.startswith('basket'))\r\n    dp.callback_query.register(select_catalog, F.data.startswith('catalog'))\r\n    dp.callback_query.register(select_category_1, F.data.startswith('t_shirts'))\r\n    dp.callback_query.register(select_product_1, F.data.startswith('t-shirt_1'))\r\n    dp.callback_query.register(select_faq, F.data.startswith('faq'))\r\n    dp.message.register(get_hello, F.text =='Привет')\r\n    dp.message.register(get_photo, F.photo)\r\n    dp.message.register(get_start, CommandStart())\r\n    try:\r\n        await dp.start_polling(bot, skip_updates=True)\r\n    finally:\r\n        await bot.session.close()\r\n\r\n\r\nif __name__ ==\"__main__\":\r\n    asyncio.run(start())\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/main.py	(date 1699135748076)
+@@ -1,14 +1,14 @@
+ from aiogram import Bot, Dispatcher
+-from aiogram.types import Message, ContentType
++from aiogram.types import ContentType, Message
+ from core.handlers.basic import get_start, get_photo, get_hello
+ import asyncio
+ import logging
+ from core.settings import settings
+-from aiogram.filters import ContentTypesFilter,Command, CommandStart
++from aiogram.filters import  Command, CommandStart
+ from aiogram import F
+ from core.utils.commands import set_commands
+ from core.handlers.callback import select_basket, select_catalog, select_faq, select_category_1, select_product_1
+-
++from core.handlers.pay import  order, pre_checkout_query, successful_payment
+ 
+ async def start_bot(bot: Bot):
+     await set_commands(bot)
+@@ -26,10 +26,14 @@
+                                 "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
+                         )
+     bot = Bot(token=settings.bots.bot_token, parse_mode='HTML')
+-
+     dp = Dispatcher()
+     dp.startup.register(start_bot)
+     dp.shutdown.register(stop_bot)
++
++    dp.message.register(order, Command(commands='pay'))
++    dp.pre_checkout_query.register(pre_checkout_query)
++    dp.message.register(successful_payment, F.content_types.SUCCESSFUL_PAYMENT) #ContentTypesFilter(content_types=[ContentType.SUCCESSFUL_PAYMENT])
++
+     dp.callback_query.register(select_basket, F.data.startswith('basket'))
+     dp.callback_query.register(select_catalog, F.data.startswith('catalog'))
+     dp.callback_query.register(select_category_1, F.data.startswith('t_shirts'))
+@@ -39,7 +43,8 @@
+     dp.message.register(get_photo, F.photo)
+     dp.message.register(get_start, CommandStart())
+     try:
+-        await dp.start_polling(bot, skip_updates=True)
++        await dp.start_polling(bot)
++                               #allowed_updates=dp.resolve_used_update_types())
+     finally:
+         await bot.session.close()
+ 
+Index: loader.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/loader.py b/loader.py
+new file mode 100644
+--- /dev/null	(date 1699026717102)
++++ b/loader.py	(date 1699026717102)
+@@ -0,0 +1,1 @@
++
+Index: core/keyboards/inline.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from aiogram import types\r\nfrom aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton\r\n\r\nfirst_select = InlineKeyboardMarkup(inline_keyboard=[\r\n    [\r\n        InlineKeyboardButton(\r\n            text='Каталог',\r\n            callback_data='catalog'\r\n        )\r\n    ],\r\n    [\r\n        InlineKeyboardButton(\r\n            text='Корзина',\r\n            callback_data='basket'\r\n        )\r\n    ],\r\n    [\r\n        InlineKeyboardButton(\r\n            text='FAQ',\r\n            callback_data='faq'\r\n        )\r\n    ]\r\n])\r\n\r\nsecond_select = InlineKeyboardMarkup(row_width=2,\r\n                                     inline_keyboard=[\r\n                                         [\r\n                                             InlineKeyboardButton(text='Футболки', callback_data='t_shirts'),\r\n                                             InlineKeyboardButton(text='Шорты', callback_data='category_2')\r\n                                         ],\r\n                                         [\r\n                                             InlineKeyboardButton(text='Рубашки', callback_data='category_3'),\r\n                                             InlineKeyboardButton(text='Штаны', callback_data='category_4')\r\n                                         ],\r\n                                         [\r\n                                             InlineKeyboardButton(text='категория 5', callback_data='category_5'),\r\n                                             InlineKeyboardButton(text='категория 6', callback_data='category_6')\r\n                                         ]\r\n                                     ])\r\n\r\nt_shirts = InlineKeyboardMarkup(row_width=2,\r\n                                inline_keyboard=[\r\n                                    [\r\n                                        InlineKeyboardButton(text='Футболка 1', callback_data='t-shirt_1'),\r\n                                        InlineKeyboardButton(text='Футболка 2', callback_data='t-shirt_2')\r\n                                    ],\r\n                                    [\r\n                                        InlineKeyboardButton(text='Футболка 3', callback_data='t-shirt_3'),\r\n                                        InlineKeyboardButton(text='Футболка 4', callback_data='t-shirt_4')\r\n                                    ],\r\n                                    [\r\n                                        InlineKeyboardButton(text='Футболка 5', callback_data='t-shirt_5'),\r\n                                        InlineKeyboardButton(text='Футболка 6', callback_data='t-shirt_6'),\r\n                                        InlineKeyboardButton(text='Футболка 6', callback_data='t-shirt_6')\r\n                                    ]\r\n                               ])\r\n\r\nproduct = InlineKeyboardMarkup(inline_keyboard=[\r\n                                    [\r\n                                        InlineKeyboardButton(text='Добавить', callback_data='add'),\r\n                                        InlineKeyboardButton(text='Количество',callback_data='quantity')\r\n                                    ],\r\n                                    [\r\n                                        InlineKeyboardButton(text='Корзина', callback_data='basket')\r\n                                    ],\r\n                                    [\r\n                                        InlineKeyboardButton(text='<<Вернуться в  \"Футболки\"',callback_data='t_shirts')\r\n                                    ]\r\n                                ])\r\n\r\n\r\nall_buttons = [\r\n    InlineKeyboardButton(text='Футболка 1', callback_data='t-shirt_1'),\r\n    InlineKeyboardButton(text='Футболка 2', callback_data='t-shirt_2'),\r\n    InlineKeyboardButton(text='Футболка 3', callback_data='t-shirt_3'),\r\n    InlineKeyboardButton(text='Футболка 4', callback_data='t-shirt_4'),\r\n    InlineKeyboardButton(text='Футболка 5', callback_data='t-shirt_5'),\r\n    InlineKeyboardButton(text='Футболка 6', callback_data='t-shirt_6'),\r\n    InlineKeyboardButton(text='Футболка 7', callback_data='t-shirt_7'),\r\n    InlineKeyboardButton(text='Футболка 8', callback_data='t-shirt_8')\r\n]\r\n\r\ndef get_keyboard(page=0):\r\n    buttons_per_page = 4\r\n    start = page * buttons_per_page\r\n    end = start + buttons_per_page\r\n    current_buttons = all_buttons[start:end]\r\n\r\n    # Добавить кнопки переключения\r\n    navigation_buttons = []\r\n    if page > 0:\r\n        navigation_buttons.append(InlineKeyboardButton(text='⬅\uFE0F Назад', callback_data=f'page_{page-1}'))\r\n    if end < len(all_buttons):\r\n        navigation_buttons.append(InlineKeyboardButton(text='Вперед ➡\uFE0F', callback_data=f'page_{page+1}'))\r\n\r\n    # Создать клавиатуру\r\n    keyboard = InlineKeyboardMarkup(row_width=2)\r\n    keyboard.inline_keyboard = [current_buttons, navigation_buttons]\r\n\r\n    return keyboard\r\n\r\n@bot.callback_query_handler(func=lambda call: call.data.startswith('page_'))\r\ndef query_handler(call):\r\n    page = int(call.data.split('_')[1])\r\n    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=\"Выберите футболку:\", reply_markup=get_keyboard(page))\r\n\r\n# all_buttons = [\r\n#     InlineKeyboardButton(text='Кнопка 1', callback_data='button1'),\r\n#     InlineKeyboardButton(text='Кнопка 2', callback_data='button2'),\r\n#     InlineKeyboardButton(text='Кнопка 3', callback_data='button3'),\r\n#     InlineKeyboardButton(text='Кнопка 4', callback_data='button4'),\r\n#     InlineKeyboardButton(text='Кнопка 5', callback_data='button5'),\r\n#     InlineKeyboardButton(text='Кнопка 6', callback_data='button6'),\r\n#     InlineKeyboardButton(text='Кнопка 7', callback_data='button7'),\r\n#     InlineKeyboardButton(text='Кнопка 8', callback_data='button8'),\r\n# ]\r\n#\r\n# buttons_per_page = 4\r\n# pagination = []\r\n# current_page = 0\r\n#\r\n# for i in range(0, len(all_buttons), buttons_per_page):\r\n#     page_buttons = all_buttons[i:i + buttons_per_page]\r\n#     pagination.append(page_buttons)\r\n#\r\n#\r\n# keyboard = InlineKeyboardMarkup(row_width=2, inline_keyboard=pagination[current_page])\r\n#\r\n# callback_data_next = 'next'\r\n# callback_data_prev = 'prev'\r\n#\r\n# if current_page < len(pagination) - 1:\r\n#     keyboard.add(InlineKeyboardButton(text='Вперед', callback_data=callback_data_next))\r\n# if current_page > 0:\r\n#     keyboard.add(InlineKeyboardButton(text='Назад', callback_data=callback_data_prev))\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/keyboards/inline.py b/core/keyboards/inline.py
+--- a/core/keyboards/inline.py	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/core/keyboards/inline.py	(date 1698750441283)
+@@ -99,10 +99,10 @@
+ 
+     return keyboard
+ 
+-@bot.callback_query_handler(func=lambda call: call.data.startswith('page_'))
+-def query_handler(call):
+-    page = int(call.data.split('_')[1])
+-    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите футболку:", reply_markup=get_keyboard(page))
++#@bot.callback_query_handler(func=lambda call: call.data.startswith('page_'))
++#def query_handler(call):
++#    page = int(call.data.split('_')[1])
++#    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите футболку:", reply_markup=get_keyboard(page))
+ 
+ # all_buttons = [
+ #     InlineKeyboardButton(text='Кнопка 1', callback_data='button1'),
+Index: .env.dist
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.env.dist b/.env.dist
+new file mode 100644
+--- /dev/null	(date 1698876708835)
++++ b/.env.dist	(date 1698876708835)
+@@ -0,0 +1,23 @@
++BOT_CONTAINER_NAME=bot_container_name
++BOT_IMAGE_NAME=botimage_name
++BOT_NAME=mybotname
++BOT_TOKEN=123456:Your-TokEn_ExaMple
++ADMINS=123456,654321
++USE_REDIS=False
++
++#PG_CONTAINER_NAME=pg_database
++#POSTGRES_USER=someusername
++#POSTGRES_PASSWORD=postgres_pass12345
++#POSTGRES_DB=bot
++#DB_HOST=pg_database
++
++# REDIS_HOST=redis_cache
++# REDIS_PORT=6388
++# REDIS_DB=1
++# REDIS_PASSWORD=someredispass
++# REDIS_CONTAINER_NAME=redis_bot
++
++
++#WEBHOOK_CONTAINER_NAME=webhook
++#WEBHOOK_EXPOSE=8001
++#WEBHOOK_APP_NAME=webhook
+\ No newline at end of file
+Index: core/handlers/callback.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from aiogram import Bot\r\nfrom aiogram.types import CallbackQuery\r\nfrom core.keyboards.inline import second_select, t_shirts, product\r\n\r\n\r\nasync def select_basket(call: CallbackQuery, bot: Bot):\r\n    answer = f'Ваша Корзина ещё находится в разработке.'\r\n    await call.message.answer(answer)\r\n    await call.answer()\r\n\r\n\r\nasync def select_catalog(call: CallbackQuery, bot: Bot):\r\n    await call.message.answer_photo(photo='https://cdn-user84060.skyeng.ru/uploads/6293a484a47a3784165045.png',\r\n                                    caption=\"Выберите категорию из каталога:\",\r\n                                    reply_markup=second_select)\r\n    await call.answer()\r\n\r\n\r\nasync def select_faq(call: CallbackQuery, bot: Bot):\r\n    answer = f'Раздел FAQ находится в разработке.'\r\n    await call.message.answer(answer)\r\n    await call.answer()\r\n\r\n\r\nasync def select_category_1(call: CallbackQuery, bot: Bot):\r\n    await call.message.answer_photo(photo='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiefpACH2VwCcdUH4xAvp0eZQHHZP-2Cu-FQ&usqp=CAU',\r\n                                    caption='Выберите товар из категории \"Футболки\"',\r\n                                    reply_markup=t_shirts)\r\n    await call.answer()\r\n\r\n\r\nasync def select_product_1(call: CallbackQuery, bot: Bot):\r\n    await call.message.answer_photo(photo='https://content1.rozetka.com.ua/goods/images/big/277910331.jpg',\r\n                                    caption=f'Футболка чёрная. Размер L. Цена 10',\r\n                                    reply_markup=product)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/handlers/callback.py b/core/handlers/callback.py
+--- a/core/handlers/callback.py	(revision c3061db117c1cf84c28d08e44c5522127cb7fa11)
++++ b/core/handlers/callback.py	(date 1698750569093)
+@@ -33,3 +33,4 @@
+     await call.message.answer_photo(photo='https://content1.rozetka.com.ua/goods/images/big/277910331.jpg',
+                                     caption=f'Футболка чёрная. Размер L. Цена 10',
+                                     reply_markup=product)
++    await call.answer()
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1698141565630)
++++ b/.idea/.gitignore	(date 1698141565630)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/5_base_bot.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/5_base_bot.iml b/.idea/5_base_bot.iml
+new file mode 100644
+--- /dev/null	(date 1698141565485)
++++ b/.idea/5_base_bot.iml	(date 1698141565485)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/venv" />
++    </content>
++    <orderEntry type="jdk" jdkName="Python 3.10 (5_base_bot)" jdkType="Python SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+--- /dev/null	(date 1699021766335)
++++ b/.gitignore	(date 1699021766335)
+@@ -0,0 +1,64 @@
++# Byte-compiled / optimized / DLL files
++__pycache__/
++*.py[cod]
++*$py.class
++
++# C extensions
++*.so
++
++# Distribution / packaging
++.Python
++build/
++develop-eggs/
++dist/
++downloads/
++eggs/
++.eggs/
++lib/
++lib64/
++parts/
++sdist/
++var/
++wheels/
++pip-wheel-metadata/
++share/python-wheels/
++*.egg-info/
++.installed.cfg
++*.egg
++MANIFEST
++
++# Installer logs
++pip-log.txt
++pip-delete-this-directory.txt
++
++# Translations
++*.mo
++*.pot
++
++
++# pyenv
++.python-version
++
++# pipenv
++#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
++#   However, in case of collaboration, if having platform-specific dependencies or dependencies
++#   having no cross-platform support, pipenv may install dependencies that don't work, or not
++#   install all needed dependencies.
++#Pipfile.lock
++
++# PEP 582; used by e.g. github.com/David-OConnor/pyflow
++__pypackages__/
++
++# Environments
++.venv
++env/
++venv/
++ENV/
++env.bak/
++venv.bak/
++
++# Pyre type checker
++.pyre/
++.idea/*
++.env
++cache/
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1698668050214)
++++ b/.idea/vcs.xml	(date 1698668050214)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/core/data/__init__.py b/core/data/__init__.py
+new file mode 100644
+diff --git a/core/data/config.py b/core/data/config.py
+new file mode 100644

@@ -33,3 +33,4 @@ async def select_product_1(call: CallbackQuery, bot: Bot):
     await call.message.answer_photo(photo='https://content1.rozetka.com.ua/goods/images/big/277910331.jpg',
                                     caption=f'Футболка чёрная. Размер L. Цена 10',
                                     reply_markup=product)
+    await call.answer()

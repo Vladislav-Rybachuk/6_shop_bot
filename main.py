@@ -9,6 +9,7 @@ from aiogram import F
 from core.utils.commands import set_commands
 from core.handlers.callback import select_basket, select_catalog, select_faq, select_category_1, select_product_1
 from core.handlers.pay import order, pre_checkout_query, successful_payment
+#from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 async def start_bot(bot: Bot):
     await set_commands(bot)
@@ -26,6 +27,7 @@ async def start():
                                 "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
                         )
     bot = Bot(token=settings.bots.bot_token, parse_mode='HTML')
+    #storage = MemoryStorage()
 
     dp = Dispatcher()
     dp.startup.register(start_bot)

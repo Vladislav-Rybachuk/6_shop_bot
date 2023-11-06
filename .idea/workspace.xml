@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddf195ee-f138-4176-96bf-186ba1fbcf7e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

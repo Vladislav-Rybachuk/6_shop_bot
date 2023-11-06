@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message, ContentType
 from core.handlers.basic import get_start, get_photo, get_hello
 import asyncio
+import django
 import logging
 from core.settings import settings
 from aiogram.filters import ContentTypesFilter,Command, CommandStart
@@ -14,6 +15,14 @@ from core.handlers.pay import order, pre_checkout_query, successful_payment, shi
 async def start_bot(bot: Bot):
     await set_commands(bot)
     await bot.send_message(settings.bots.admin_id, text='Бот запущен!')
+
+def setup_django():
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE",
+        "django_project.telegrambot.telegrambot.settings"
+    )
+    os.environ.update({"DJANGO_ALLOW_ASYNC_UNSAFE"": "true"})
+    django.setup()
 
 
 async def stop_bot(bot: Bot):
@@ -52,4 +61,5 @@ async def start():
 
 
 if __name__ =="__main__":
+    setup_django()
     asyncio.run(start())

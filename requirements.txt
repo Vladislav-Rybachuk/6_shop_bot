@@ -4,3 +4,5 @@ django==3.0
 asyncpg
 sqlalchemy
 gino
+psycopg2
+environ

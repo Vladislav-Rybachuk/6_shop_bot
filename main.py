@@ -8,7 +8,7 @@ from aiogram.filters import ContentTypesFilter,Command, CommandStart
 from aiogram import F
 from core.utils.commands import set_commands
 from core.handlers.callback import select_basket, select_catalog, select_faq, select_category_1, select_product_1
-from core.handlers.pay import order, pre_checkout_query, successful_payment
+from core.handlers.pay import order, pre_checkout_query, successful_payment, shipping_check
 #from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 async def start_bot(bot: Bot):
@@ -36,7 +36,7 @@ async def start():
     dp.message.register(order, Command(commands='pay'))
     dp.pre_checkout_query.register(pre_checkout_query)
     dp.message.register(successful_payment,ContentTypesFilter(content_types=[ContentType.SUCCESSFUL_PAYMENT]) ) #F.content_types.SUCCESSFUL_PAYMENT
-
+    dp.shipping_query.register(shipping_check)
     dp.callback_query.register(select_basket, F.data.startswith('basket'))
     dp.callback_query.register(select_catalog, F.data.startswith('catalog'))
     dp.callback_query.register(select_category_1, F.data.startswith('t_shirts'))

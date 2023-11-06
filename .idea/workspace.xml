@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddf195ee-f138-4176-96bf-186ba1fbcf7e" name="Changes" comment="" />
+    <list default="true" id="ddf195ee-f138-4176-96bf-186ba1fbcf7e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/adminmanage/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,18 +45,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Dev/Aiogram/6_shop_bot",
-    "settings.editor.selected.configurable": "reference.settingsDialog.application.dockerConsole"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Dev/Aiogram/6_shop_bot&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsDialog.application.dockerConsole&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Dev\Aiogram\6_shop_bot" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Dev\Aiogram\6_shop_bot\django_project\telegrambot" />
+      <recent name="D:\Dev\Aiogram\6_shop_bot\django_project" />
     </key>
   </component>
   <component name="RunManager">
@@ -86,5 +101,8 @@
       <updated>1698141112278</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
 </project>

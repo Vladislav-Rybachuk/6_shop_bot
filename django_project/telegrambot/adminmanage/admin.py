@@ -31,10 +31,12 @@ class OrderAdmin(admin.ModelAdmin):
                     'email', 'receiver', 'successful')
     list_filter = ('is_processed', 'successful', 'order_time')
     search_fields = ('user__name', 'user__username', 'receiver', 'email')
-
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    extra = 0
+    
+    
+# @admin.register(OrderItem)
+# class OrderItemInline(admin.ModelAdmin):
+#     model = OrderItem
+#     extra = 0
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
@@ -42,6 +44,6 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter = ('order', 'product')
     search_fields = ('order__id', 'product__title')
 
-    inlines = [
-        OrderItemInline,
-    ]
+    # inlines = [
+    #     OrderItemInline,
+    # ]

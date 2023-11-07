@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'telegrambot.adminmanage',
+    'adminmanage',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'django_project.telegrambot.telegrambot.urls'
+ROOT_URLCONF = 'telegrambot.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_project.telegrambot.telegrambot.wsgi.application'
+WSGI_APPLICATION = 'telegrambot.wsgi.application'
 
 
 # Database
@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': os.getenv("DATABASE"),
         'USER':os.getenv("PGUSER"),
         'PASSWORD': os.getenv("PGPASSWORD"),
-        'HOST': "localhost",
+        'HOST': "localhost", # 127.0.0.1
         'PORT': os.getenv("DBPORT"),
     }
 }

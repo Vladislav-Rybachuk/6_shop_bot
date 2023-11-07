@@ -1,3 +1,4 @@
+import os
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message, ContentType
 from core.handlers.basic import get_start, get_photo, get_hello
@@ -21,7 +22,7 @@ def setup_django():
         "DJANGO_SETTINGS_MODULE",
         "django_project.telegrambot.telegrambot.settings"
     )
-    os.environ.update({"DJANGO_ALLOW_ASYNC_UNSAFE"": "true"})
+    #os.environ.update({"DJANGO_ALLOW_ASYNC_UNSAFE"": " True"})
     django.setup()
 
 

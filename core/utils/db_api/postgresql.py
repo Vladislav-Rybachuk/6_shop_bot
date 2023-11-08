@@ -13,10 +13,10 @@ class Database:
 
     async def create(self):
         self.pool = await asyncpg.create_pool(
-            user= , #Заполнить данные о БД
-            password=,
-            host=,
-            database=
+            user = 'postgres',
+            password = 'postgres',
+            host = 'localhost',
+            database = 'postgres',
         )
 
     async def execute(self, command, *args,
@@ -83,3 +83,50 @@ class Database:
 
     async def drop_users(self):
         await self.execute("DROP TABLE Users", execute=True)
+
+
+    #Функции для работы с корзиной
+    async def get_products(self, category_id):
+        with self.connect:
+            return self.cursor.execute("""SELECT * FROM products WHERE category_id=(?)""", [category_id]).fetchall()
+
+    async def get_user_product(self, product_id):
+        with self.connect:
+            return self.cursor.execute("""SELECT * FROM products WHERE product_id=(?)""", [product_id]).fetchall()
+
+    async def get_cart(self, user_id):
+        with self.connect:
+            return self.cursor.execute("""SELECT * FROM cart WHERE user_id=(?)""", [user_id]).fetchall()
+
+    async def add_to_cart(self, user_id, product_id):
+        with self.connect:
+            return self.cursor.execute("""INSERT INTO cart (user_id, product_id, count) VALUES (?, ?, ?)""",
+                                       [user_id, product_id, 1])
+
+    async def empty_cart(self, user_id):
+        with self.connect:
+            return self.cursor.execute("""DELETE FROM cart WHERE user_id=(?)""", [user_id])
+
+    async def get_categories(self):
+        with self.connect:
+            return self.cursor.execute("""SELECT * FROM categories""").fetchall()
+
+    async def get_count_in_cart(self, user_id, product_id):
+        with self.connect:
+            return self.cursor.execute("""SELECT count FROM cart WHERE user_id=(?) AND product_id=(?)""",
+                                       [user_id, product_id]).fetchall()
+
+    async def get_count_in_stock(self, product_id):
+        with self.connect:
+            return self.cursor.execute("""SELECT count FROM products WHERE product_id=(?)""",
+                                       [product_id]).fetchall()
+
+    async def remove_one_item(self, product_id, user_id):
+        with self.connect:
+            return self.cursor.execute("""DELETE FROM cart WHERE product_id=(?) AND user_id=(?)""",
+                                       [product_id, user_id])
+
+    async def change_count(self, count, product_id, user_id):
+        with self.connect:
+            return self.cursor.execute("""UPDATE cart SET count=(?) WHERE product_id=(?) AND user_id=(?)""",
+                                       [count, product_id, user_id])

@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'telegrambot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_DATABASE"),
-        'USER':os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"), # 127.0.0.1
-        'PORT': os.getenv("DB_PORT"),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',#os.getenv("DB_NAME"),
+        'USER': 'postgres',#os.getenv("DB_USER"),
+        'PASSWORD': 'postgres',#os.getenv("DB_PASSWORD"),
+        'HOST':  'localhost', #os.getenv("DB_HOST"), # 127.0.0.1
+        'PORT': '5432' #os.getenv("DB_PORT"),
     }
 }
 

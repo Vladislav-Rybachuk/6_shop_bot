@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddf195ee-f138-4176-96bf-186ba1fbcf7e" name="Changes" comment="added django">
-      <change afterPath="$PROJECT_DIR$/django_project/telegrambot/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/telegrambot/adminmanage/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/utils/db_api/postgresql.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/utils/db_api/postgresql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/telegrambot/telegrambot/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/telegrambot/telegrambot/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
